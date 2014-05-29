@@ -28,3 +28,15 @@ library(reshape2)
                     )
   )
 
+#--------------------------------------------------------------------
+
+ED_C=ED[,6]
+ED_C=as.data.frame(ED_C)
+ED_C=data.table(ED_C)
+ED_C[,SMA20:=SMA(ED.Adjusted,20)]
+ED_C[,check:=ifelse(ED.Adjusted>SMA20,"Buy","Sell")]
+ED_C
+ED_C$date=date1
+ED_C
+ED_C$date=as.Date(ED_C$date)
+lapply(21:1833,function(x){a$check_(new_date=ED_C$date[x],check=ED_C$check[x])})
