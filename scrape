@@ -24,7 +24,7 @@ class MySpider(CrawlSpider):
 	
 	
 
-	# def parse(self, response):
+	# def parse_item(self, response):
       # hxs = HtmlXPathSelector(response)
       # titles = hxs.select("//span[@class='pl']")
       # items = []
@@ -34,7 +34,7 @@ class MySpider(CrawlSpider):
           # item ["link"] = titles.select("a/@href").extract()
           # items.append(item)
       # return items
-	def parse(self,response):
+	def parse_item(self,response):
 		hxs = Selector(response)
 		sites = hxs.xpath('//div[contains(@id,"PoemBody")]/text()')
 		urls=hxs.xpath('//a[contains(@href,"viewpoem")]//@href')
