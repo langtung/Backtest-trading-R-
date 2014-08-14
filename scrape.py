@@ -12,12 +12,12 @@ from scrapy.selector import HtmlXPathSelector
 
 class MySpider(CrawlSpider):
 	name = "craigs"
-	download_delay = 5
+	download_delay = 2
 	allowed_domains = ["thivien.net"]
 	start_urls = ["http://www.thivien.net/searchauthor.php?Country=2"]
 	
 	rules = (Rule (SgmlLinkExtractor(allow=[r'Country=2&Page=\d+']), follow=True),
-	Rule(SgmlLinkExtractor(allow=()), callback='parse_item'),)
+	Rule(SgmlLinkExtractor(allow=(r'viewauthor')), callback='parse_item'),)
 	#restrict_xpaths=('//p[@id="nextpage"]',))
 	
 	
@@ -46,6 +46,7 @@ class MySpider(CrawlSpider):
 			print url.extract()
 			yield scrapy.Request("http://www.thivien.net/"+url.extract(), callback=self.getTho)
 	def getTho(sefl,response):
+	    
 		hxs = Selector(response)
 		sites = hxs.xpath('//div[contains(@id,"PoemBody")]/text()')
 		author=hxs.xpath('//a[contains(@href,"viewauthor")]/b/text()')[0].extract().encode('utf-8')
@@ -56,17 +57,7 @@ class MySpider(CrawlSpider):
 		filename="("+author+") "+title+".txt"
 		filename=unicode(filename,"utf-8")
 		# print filename
+		print("***************************************************************************************")
 		with open(filename,'w') as thefile:
 			for site in sites:
 				print>>thefile,site.extract().encode('utf-8')
-		
-		# for h3 in sites:
-			# print h3.extract().encode('utf-8')
-			# with open('test.txt','w') as thefile:
-				# for site in sites:
-					# print>>thefile,site.extract().encode('utf-8')
-		# print h3
-		
-			
-			
-		
