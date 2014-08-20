@@ -146,3 +146,5 @@ def replace_all(text, dic):
     for i, j in dic.iteritems():
         text = text.replace(i, j)
     return text
+    
+    M14U5mxcZx2u4s
