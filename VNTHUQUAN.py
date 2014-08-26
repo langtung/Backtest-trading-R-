@@ -49,5 +49,14 @@ while stop1<20:
 	print b
 		
 
-
+while stop1<40:
+	text.append(driver.page_source)
+	stop1=Decimal((driver.find_element_by_xpath("//td[@colspan='4']/span").text))
+	print(stop1)
+	b=driver.find_elements_by_xpath("//td[@colspan='4']/a[@href]")[u[0]]
+	del u[0]
+	if len(u)==0:
+		b=driver.find_elements_by_xpath("//td[@colspan='4']/a[@href]")[10]
+		u=[1,2,3,4,5,6,7,8,9]
+	b.click()
 
